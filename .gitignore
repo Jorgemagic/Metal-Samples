@@ -1,0 +1,11 @@
+
+\.mfractor/
+
+\.vs/
+
+*.suo
+*.user
+bin
+obj
+packages
+
