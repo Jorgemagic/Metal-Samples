@@ -22,6 +22,6 @@ A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp
 
 #### [08 - DrawInstancingTriangle (Method 1)](DrawInstancingTriangle/)
 
-![alt Draw Instancing Triangle](https://raw.githubusercontent.com/Jorgemagic/Metal2-Samples/Screenshots/Instancing.png)
+![alt Draw Instancing Triangle](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Instancing.png)
 
 #### [09 - DrawInstancingTriangle (Method 2)](DrawInstancingTriangle2/)
