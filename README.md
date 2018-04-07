@@ -6,22 +6,26 @@ A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp
 
 ### Basic
 
-#### [01 - DrawTriangle](DrawTriangle/)
+#### [01 - Draw Triangle](DrawTriangle/)
 
-#### [02 - DrawIndexedQuad](DrawIndexedQuad/)
+![alt Draw simple Triangle](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/DrawTriangle.png)
 
-#### [03 - DrawCube](DrawCube/)
+#### [02 - Draw Indexed Quad](DrawIndexedQuad/)
 
-#### [04 - DrawAlphaBlend](DrawAlphaBlend/)
+![alt Draw Quad](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/DrawIndexedQuad.png)
 
-#### [05 - DrawTexturedCube](DrawTexturedCube/)
+#### [03 - Draw Cube](DrawCube/)
+
+#### [04 - Draw AlphaBlend](DrawAlphaBlend/)
+
+#### [05 - Draw Textured Cube](DrawTexturedCube/)
 
 #### [06 - Mipmapping](DrawMipmapping/)
 
 #### [07 - Cubemap](Cubemap/)
 
-#### [08 - DrawInstancingTriangle (Method 1)](DrawInstancingTriangle/)
+#### [08 - Draw Instancing Triangle (Method 1)](DrawInstancingTriangle/)
 
 ![alt Draw Instancing Triangle](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Instancing.png)
 
-#### [09 - DrawInstancingTriangle (Method 2)](DrawInstancingTriangle2/)
+#### [09 - Draw Instancing Triangle (Method 2)](DrawInstancingTriangle2/)
