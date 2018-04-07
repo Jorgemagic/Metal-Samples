@@ -16,16 +16,28 @@ A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp
 
 #### [03 - Draw Cube](DrawCube/)
 
+![alt Draw Cube](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/DrawCube.png)
+
 #### [04 - Draw AlphaBlend](DrawAlphaBlend/)
+
+![alt Draw AlphaBlend](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/AlphaBlending.png)
 
 #### [05 - Draw Textured Cube](DrawTexturedCube/)
 
+![alt Draw Textured Cube](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/DrawTexturedCube.png)
+
 #### [06 - Mipmapping](DrawMipmapping/)
+
+![alt Mipmapping](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Mipmapping.png)
 
 #### [07 - Cubemap](Cubemap/)
 
-#### [08 - Draw Instancing Triangle (Method 1)](DrawInstancingTriangle/)
+![alt Cubemap](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Cubemap.png)
 
-![alt Draw Instancing Triangle](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Instancing.png)
+#### [08 - Draw Instancing Triangles (Method 1)](DrawInstancingTriangle/)
 
-#### [09 - Draw Instancing Triangle (Method 2)](DrawInstancingTriangle2/)
+![alt Draw Instancing Triangles](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Instancing.png)
+
+#### [09 - Draw Instancing Triangles (Method 2)](DrawInstancingTriangle2/)
+
+![alt Draw Instancing Triangles](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Instancing2.png)
