@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrawScissor", "DrawScissor\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cubemap", "Cubemap\Cubemap.csproj", "{0B406928-CD6C-4D13-949C-B70DE089F7A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StencilTest", "StencilTest\StencilTest.csproj", "{7948543F-A70D-4B0A-B2C1-F8BB59786757}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -109,5 +111,13 @@ Global
 		{0B406928-CD6C-4D13-949C-B70DE089F7A6}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{0B406928-CD6C-4D13-949C-B70DE089F7A6}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
 		{0B406928-CD6C-4D13-949C-B70DE089F7A6}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Release|iPhone.ActiveCfg = Release|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Release|iPhone.Build.0 = Release|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
+		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
 	EndGlobalSection
 EndGlobal
