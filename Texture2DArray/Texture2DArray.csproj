@@ -90,8 +90,6 @@
     <InterfaceDefinition Include="MainMenu.xib" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="crate.ktx" />
-    <BundleResource Include="Resources\crate.ktx" />
     <BundleResource Include="Resources\DiffuseArray.ktx" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
