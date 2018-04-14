@@ -41,3 +41,7 @@ A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp
 #### [09 - Draw Instancing Triangles (Method 2)](DrawInstancingTriangle2/)
 
 ![alt Draw Instancing Triangles](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Instancing2.png)
+
+#### [10 - Outlining object using Stencil test](StencilTest/)
+
+![alt Outlining object using Stencil test](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Stencil.png)

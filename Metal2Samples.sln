@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cubemap", "Cubemap\Cubemap.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StencilTest", "StencilTest\StencilTest.csproj", "{7948543F-A70D-4B0A-B2C1-F8BB59786757}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderToTexture", "RenderToTexture\RenderToTexture.csproj", "{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -119,5 +121,13 @@ Global
 		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
 		{7948543F-A70D-4B0A-B2C1-F8BB59786757}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Release|iPhone.ActiveCfg = Release|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Release|iPhone.Build.0 = Release|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
+		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
 	EndGlobalSection
 EndGlobal
