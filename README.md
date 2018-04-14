@@ -49,3 +49,7 @@ A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp
 #### [11 - Render To Texture](RenderToTexture/)
 
 ![alt Render to texture](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/RenderToTexture.png)
+
+#### [12 - Draw Texture 2D Array](Texture2DArray/)
+
+![alt Texture 2D Array](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Texture2DArray.png)

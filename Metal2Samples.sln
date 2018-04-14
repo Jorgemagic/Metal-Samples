@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StencilTest", "StencilTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RenderToTexture", "RenderToTexture\RenderToTexture.csproj", "{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Texture2DArray", "Texture2DArray\Texture2DArray.csproj", "{AD605283-0F84-429A-A8FF-20F9AC5EC518}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -129,5 +131,13 @@ Global
 		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
 		{ED2EA155-5C9F-4BA5-8F13-BD5D38929057}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Release|iPhone.ActiveCfg = Release|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Release|iPhone.Build.0 = Release|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Debug|iPhone.ActiveCfg = Debug|iPhoneSimulator
+		{AD605283-0F84-429A-A8FF-20F9AC5EC518}.Debug|iPhone.Build.0 = Debug|iPhoneSimulator
 	EndGlobalSection
 EndGlobal
