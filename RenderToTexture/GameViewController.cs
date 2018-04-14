@@ -95,7 +95,7 @@ namespace MetalTest
         IMTLDepthStencilState depthStencilState;
         IMTLBuffer cubeVertexBuffer, triangleVertexBuffer;
         IMTLBuffer cubeConstantBuffer;
-        IMTLTexture texture;
+        IMTLTexture cubeTexture, colorFrameBufferTexture;
         IMTLSamplerState sampler;
 
         System.Diagnostics.Stopwatch clock;
@@ -232,7 +232,7 @@ namespace MetalTest
             // Texture          
             NSImage image = NSImage.ImageNamed("crate.png");
             MTKTextureLoader mTKTextureLoader = new MTKTextureLoader(device);
-            this.texture = mTKTextureLoader.FromCGImage(image.CGImage, new MTKTextureLoaderOptions(), out error);
+            this.cubeTexture = mTKTextureLoader.FromCGImage(image.CGImage, new MTKTextureLoaderOptions(), out error);
 
             MTLSamplerDescriptor samplerDescriptor = new MTLSamplerDescriptor()
             {
@@ -242,6 +242,25 @@ namespace MetalTest
                 TAddressMode = MTLSamplerAddressMode.Repeat,
             };
             this.sampler = device.CreateSamplerState(samplerDescriptor);
+
+            // Create FrameBuffer texture
+            IMTLTexture drawableTexture = mtkView.CurrentDrawable.Texture;
+            MTLTextureDescriptor textureDescriptor = new MTLTextureDescriptor()
+            {
+                Width = drawableTexture.Width,
+                Height = drawableTexture.Height,
+				PixelFormat = drawableTexture.PixelFormat,
+                TextureType = drawableTexture.TextureType,
+                MipmapLevelCount = drawableTexture.MipmapLevelCount,
+                ArrayLength = drawableTexture.ArrayLength,
+                SampleCount = drawableTexture.SampleCount,
+                Depth = drawableTexture.Depth,
+                CpuCacheMode = drawableTexture.CpuCacheMode,               
+                Usage = MTLTextureUsage.RenderTarget,
+                StorageMode = MTLStorageMode.Managed,
+            };
+
+            this.colorFrameBufferTexture = device.CreateTexture(textureDescriptor);
         }
 
         public void DrawableSizeWillChange(MTKView view, CoreGraphics.CGSize size)
@@ -267,38 +286,48 @@ namespace MetalTest
 
             // Obtain a renderPassDescriptor generated from the view's drawable textures
             MTLRenderPassDescriptor renderPassDescriptor = view.CurrentRenderPassDescriptor;
-            renderPassDescriptor.ColorAttachments[0].Texture = drawable.Texture;
+            renderPassDescriptor.ColorAttachments[0].Texture = this.colorFrameBufferTexture;
+            renderPassDescriptor.ColorAttachments[0].ClearColor = new MTLClearColor(0.5f, 0.75f, 1, 1);
 
             // If we have a valid drawable, begin the commands to render into it
             if (renderPassDescriptor != null)
             {
-                // Create a render command encoder so we can render into something
-                IMTLRenderCommandEncoder renderEncoder = commandBuffer.CreateRenderCommandEncoder(renderPassDescriptor);
-                renderEncoder.SetDepthStencilState(depthStencilState);
-
+                //--------------------------------
                 // Draw Triangle
+                //--------------------------------
 
-                renderEncoder.SetRenderPipelineState(trianglePipelineState);
-                renderEncoder.SetVertexBuffer(triangleVertexBuffer, 0, 0);
+				// Create a render command encoder so we can render into something
+				IMTLRenderCommandEncoder triangleRenderEncoder = commandBuffer.CreateRenderCommandEncoder(renderPassDescriptor);
+				triangleRenderEncoder.SetDepthStencilState(depthStencilState);
+
+                triangleRenderEncoder.SetRenderPipelineState(trianglePipelineState);
+                triangleRenderEncoder.SetVertexBuffer(triangleVertexBuffer, 0, 0);
 
                 // Tell the render context we want to draw our primitives               
-                renderEncoder.DrawPrimitives(MTLPrimitiveType.Triangle, 0, (nuint)triangleVertexData.Length);
+                triangleRenderEncoder.DrawPrimitives(MTLPrimitiveType.Triangle, 0, (nuint)triangleVertexData.Length);
 
+                triangleRenderEncoder.EndEncoding();
 
+                //--------------------------------
                 // Draw Cube
+                //--------------------------------
+				renderPassDescriptor.ColorAttachments[0].Texture = drawable.Texture;
+                renderPassDescriptor.ColorAttachments[0].ClearColor = mtkView.ClearColor;
+                IMTLRenderCommandEncoder cubeRenderEncoder = commandBuffer.CreateRenderCommandEncoder(renderPassDescriptor);
+                cubeRenderEncoder.SetDepthStencilState(depthStencilState);
 
                 // Set context state
-                renderEncoder.SetRenderPipelineState(cubePipelineState);
-                renderEncoder.SetVertexBuffer(cubeVertexBuffer, 0, 0);
-                renderEncoder.SetVertexBuffer(cubeConstantBuffer, (nuint)Marshal.SizeOf(this.cubeParameters), 1);
-                renderEncoder.SetFragmentTexture(this.texture, 0);
-                renderEncoder.SetFragmentSamplerState(this.sampler, 0);
+                cubeRenderEncoder.SetRenderPipelineState(cubePipelineState);
+                cubeRenderEncoder.SetVertexBuffer(cubeVertexBuffer, 0, 0);
+                cubeRenderEncoder.SetVertexBuffer(cubeConstantBuffer, (nuint)Marshal.SizeOf(this.cubeParameters), 1);
+                cubeRenderEncoder.SetFragmentTexture(this.colorFrameBufferTexture, 0);
+                cubeRenderEncoder.SetFragmentSamplerState(this.sampler, 0);
 
                 // Tell the render context we want to draw our primitives               
-                renderEncoder.DrawPrimitives(MTLPrimitiveType.Triangle, 0, (nuint)cubeVertexData.Length);
+                cubeRenderEncoder.DrawPrimitives(MTLPrimitiveType.Triangle, 0, (nuint)cubeVertexData.Length);
 
                 // We're done encoding commands
-                renderEncoder.EndEncoding();
+                cubeRenderEncoder.EndEncoding();
 
                 // Schedule a present once the framebuffer is complete using the current drawable
                 commandBuffer.PresentDrawable(drawable);
