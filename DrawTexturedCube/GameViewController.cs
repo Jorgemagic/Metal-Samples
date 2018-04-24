@@ -164,7 +164,6 @@ namespace MetalTest
                 VertexDescriptor = vertexDescriptor,
                 DepthAttachmentPixelFormat = mtkView.DepthStencilPixelFormat,
                 StencilAttachmentPixelFormat = mtkView.DepthStencilPixelFormat,
-
             };
 
             MTLRenderPipelineColorAttachmentDescriptor renderBufferAttachment = pipelineStateDescriptor.ColorAttachments[0];
