@@ -72,7 +72,7 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Metal Include="Cube.metal" />
+    <Metal Include="Mesh.metal" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -90,11 +90,8 @@
     <InterfaceDefinition Include="MainMenu.xib" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\muro.obj" />
     <BundleResource Include="Resources\Fighter.obj" />
     <BundleResource Include="Resources\Fighter_Diffuse.jpg" />
-    <BundleResource Include="Resources\firetruck.obj" />
-    <BundleResource Include="Resources\BodyBaseColor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

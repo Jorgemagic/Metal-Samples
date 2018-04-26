@@ -28,7 +28,6 @@ namespace DrawCube
         IMTLLibrary defaultLibrary;
         IMTLRenderPipelineState pipelineState;
         IMTLDepthStencilState depthState;
-        IMTLBuffer vertexBuffer;
         IMTLBuffer constantBuffer;
         IMTLTexture texture;
         IMTLSamplerState sampler;
@@ -74,27 +73,14 @@ namespace DrawCube
             mtkView.ClearColor = new MTLClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 
             // Load the vertex program into the library
-            IMTLFunction vertexProgram = defaultLibrary.CreateFunction("cube_vertex");
+            IMTLFunction vertexProgram = defaultLibrary.CreateFunction("mesh_vertex");
 
             // Load the fragment program into the library
-            IMTLFunction fragmentProgram = defaultLibrary.CreateFunction("cube_fragment");
+            IMTLFunction fragmentProgram = defaultLibrary.CreateFunction("mesh_fragment");
 
-            // Generate meshes         
-            //MDLVertexDescriptor vd = new MDLVertexDescriptor();
-            //vd.Attributes[0].Format = MDLVertexFormat.Float3;
-            //vd.Attributes[0].BufferIndex = 0;
-            //vd.Attributes[0].Offset = 0;
-            //vd.Attributes[1].Format = MDLVertexFormat.Float3;
-            //vd.Attributes[1].BufferIndex = 0;
-            //vd.Attributes[1].Offset = 3 * sizeof(float);
-            //vd.Attributes[2].Format = MDLVertexFormat.Float2;
-            //vd.Attributes[2].BufferIndex = 0;
-            //vd.Attributes[2].Offset = 6 * sizeof(float);
-
-            //vd.Layouts[0].Stride = 8 * sizeof(float);
-
+            // Generate meshes                  
             MTKMeshBufferAllocator mtkBufferAllocator = new MTKMeshBufferAllocator(device);
-            NSUrl url = NSBundle.MainBundle.GetUrlForResource("firetruck", "obj");
+            NSUrl url = NSBundle.MainBundle.GetUrlForResource("Fighter", "obj");
             MDLAsset mdlAsset = new MDLAsset(url, new MDLVertexDescriptor(), mtkBufferAllocator);
             MDLObject mdlObject = mdlAsset.GetObject(0);
             MDLMesh mdlMesh = mdlObject as MDLMesh;
@@ -110,7 +96,6 @@ namespace DrawCube
             this.clock = new System.Diagnostics.Stopwatch();
             clock.Start();
 
-            //this.view = CreateLookAt(new Vector3(0, 2, 5), new Vector3(0, 0, 0), Vector3.UnitY);
             this.view = CreateLookAt(new Vector3(0, 1, 2), new Vector3(0, 0, 0), Vector3.UnitY);
             var aspect = (float)(View.Bounds.Size.Width / View.Bounds.Size.Height);
             this.proj = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
@@ -142,7 +127,7 @@ namespace DrawCube
 
             depthState = device.CreateDepthStencilState(depthStateDesc);
 
-            NSImage image = NSImage.ImageNamed("BodyBaseColor.png");
+            NSImage image = NSImage.ImageNamed("Fighter_Diffuse.jpg");
             MTKTextureLoader mTKTextureLoader = new MTKTextureLoader(device);
             this.texture = mTKTextureLoader.FromCGImage(image.CGImage, new MTKTextureLoaderOptions(), out error);
 
@@ -166,7 +151,7 @@ namespace DrawCube
             // Update
             var time = clock.ElapsedMilliseconds / 1000.0f;
             var viewProj = Matrix4.Mult(this.view, this.proj);
-            var worldViewProj = Matrix4.CreateRotationY(time * 2) * Matrix4.Scale(0.05f) * viewProj;//Matrix4.Scale(0.0025f) * viewProj;
+            var worldViewProj = Matrix4.CreateRotationY(time * 2) * Matrix4.Scale(0.0015f) * viewProj;
             worldViewProj = Matrix4.Transpose(worldViewProj);
             this.param.WorldViewProjection = worldViewProj;
             SetConstantBuffer(this.param, constantBuffer);

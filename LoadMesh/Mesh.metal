@@ -21,7 +21,7 @@ typedef struct {
 } ColorInOut;
 
 // Vertex shader function
-vertex ColorInOut cube_vertex(VertexInput in [[ stage_in ]],
+vertex ColorInOut mesh_vertex(VertexInput in [[ stage_in ]],
                               constant uniforms_t& uniforms [[ buffer(1) ]])
 {
     ColorInOut out;
@@ -34,10 +34,9 @@ vertex ColorInOut cube_vertex(VertexInput in [[ stage_in ]],
 }
 
 // Fragment shader function
-fragment float4 cube_fragment(ColorInOut in [[stage_in]],
+fragment float4 mesh_fragment(ColorInOut in [[stage_in]],
                               texture2d<float> diffuseTexture [[texture(0)]],
                               sampler samplr [[sampler(0)]])
 {
     return diffuseTexture.sample(samplr, in.tex);
-    //return float4(in.normal,1);
 }
