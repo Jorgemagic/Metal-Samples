@@ -53,3 +53,7 @@ A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp
 #### [12 - Draw Texture 2D Array](Texture2DArray/)
 
 ![alt Texture 2D Array](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/Texture2DArray.png)
+
+#### [13 - Load .obj file mesh](LoadMesh/)
+
+![alt Load mesh](https://github.com/Jorgemagic/Metal2-Samples/blob/master/Screenshots/LoadMesh.png)
