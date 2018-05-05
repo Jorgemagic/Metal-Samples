@@ -23,8 +23,7 @@ namespace DrawTriangle
 
         // renderer
         IMTLDevice device;
-        IMTLCommandQueue commandQueue;
-        IMTLLibrary defaultLibrary;
+        IMTLCommandQueue commandQueue;       
         IMTLComputePipelineState computePipelineState;
         IMTLRenderPipelineState renderPipelineState;
 
@@ -53,9 +52,7 @@ namespace DrawTriangle
             // Create a new command queue
             commandQueue = device.CreateCommandQueue();
 
-            // Load all the shader files with a metal file extension in the project
-            defaultLibrary = device.CreateDefaultLibrary();
-
+            NSError error;
 
             // Setup view
             view = (MTKView)View;
@@ -69,11 +66,16 @@ namespace DrawTriangle
 			view.ClearColor = new MTLClearColor(0, 0, 0, 1.0f);
 
             // Functions
-            var text = System.IO.File.ReadAllText("Triangle.metal");
-            IMTLFunction kernelFunction = defaultLibrary.CreateFunction("tessellation_kernel_triangle");
-            IMTLFunction vertexFunction = defaultLibrary.CreateFunction("tessellation_vertex_triangle");
-            IMTLFunction fragmentFunction = defaultLibrary.CreateFunction("tessellation_fragment");
+            var source = System.IO.File.ReadAllText("Triangle.metal");
+            MTLCompileOptions compileOptions = new MTLCompileOptions()
+            {
+                LanguageVersion = MTLLanguageVersion.v2_0,
+            };
 
+            IMTLLibrary customLibrary = device.CreateLibrary(source, compileOptions, out error);
+            IMTLFunction kernelFunction = customLibrary.CreateFunction("tessellation_kernel_triangle");
+            IMTLFunction vertexFunction = customLibrary.CreateFunction("tessellation_vertex_triangle");
+            IMTLFunction fragmentFunction = customLibrary.CreateFunction("tessellation_fragment");
 
             // Create a vertex descriptor     
             MTLVertexDescriptor vertexDescriptor = new MTLVertexDescriptor();
@@ -107,7 +109,6 @@ namespace DrawTriangle
 
             renderPipelineStateDescriptor.ColorAttachments[0].PixelFormat = view.ColorPixelFormat;
 
-            NSError error;
             renderPipelineState = device.CreateRenderPipelineState(renderPipelineStateDescriptor, out error);
             if (renderPipelineState == null)
                 Console.WriteLine("Failed to created pipeline state, error {0}", error);
@@ -119,6 +120,8 @@ namespace DrawTriangle
             };
 
             depthState = device.CreateDepthStencilState(depthStateDesc);
+
+            computePipelineState = device.CreateComputePipelineState(kernelFunction, out error);
 
             // Buffers
             tessellationFactorsBuffer = device.CreateBuffer(256, MTLResourceOptions.StorageModePrivate);

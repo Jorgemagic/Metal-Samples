@@ -89,7 +89,7 @@
     <InterfaceDefinition Include="MainMenu.xib" />
   </ItemGroup>
   <ItemGroup>
-    <Metal Include="Triangle.metal" />
+    <Content Include="Resources\Triangle.metal" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

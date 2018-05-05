@@ -52,7 +52,7 @@ vertex FunctionOutIn tessellation_vertex_triangle(PatchIn patchIn [[stage_in]],
     // Output
     FunctionOutIn vertexOut;
     vertexOut.position = float4(x, y, 0.0, 1.0);
-    vertexOut.color = half4(u, v, w, 1.0);
+    vertexOut.color = half4(1, 1, 1, 1.0);
     return vertexOut;
 }
 
