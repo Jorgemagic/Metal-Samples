@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Texture2DArray", "Texture2D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadMesh", "LoadMesh\LoadMesh.csproj", "{6DF877FA-3CC3-403F-971A-A462B1F9B4F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tesselation", "Tesselation\Tesselation.csproj", "{1368B5C9-6078-4FE8-B86A-208D1C69DB68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tessellation", "Tesselation\Tessellation.csproj", "{1368B5C9-6078-4FE8-B86A-208D1C69DB68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
