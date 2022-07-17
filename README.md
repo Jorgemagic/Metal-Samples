@@ -1,6 +1,8 @@
-# Metal2 C# examples and demos
+# Metal C# examples and demos
 
-A [Metal 2](https://developer.apple.com/metal/) Sample Gallery written in CSharp using [Xamarin Wrapper](https://www.xamarin.com)
+A [Metal](https://developer.apple.com/metal/) Sample Gallery written in CSharp using [NET6](https://docs.microsoft.com/en-us/dotnet/core/install/macos)
+
+Notes. Visual Studio for Mac could be some problems. If you have issues running the samples try with _dotnet run_ command in the folder of each example.
 
 ## Examples
 
