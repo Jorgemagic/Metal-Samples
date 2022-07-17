@@ -4,7 +4,7 @@ using AppKit;
 using Foundation;
 using Metal;
 using MetalKit;
-using OpenTK;
+using System.Numerics;
 
 namespace DrawCube
 {
@@ -68,7 +68,7 @@ namespace DrawCube
         IMTLBuffer constantBuffer;
 
         System.Diagnostics.Stopwatch clock;
-        Matrix4 proj, view;
+        Matrix4x4 proj, view;
 
         public GameViewController(IntPtr handle)
             : base(handle)
@@ -130,8 +130,8 @@ namespace DrawCube
             clock.Start();
 
             this.view = CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 0), Vector3.UnitY);
-            var aspect = (float)(View.Bounds.Size.Width / View.Bounds.Size.Height);
-            proj = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
+            var aspect = (float)(View.Bounds.Size.Width.Value / View.Bounds.Size.Height.Value);
+            proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
 
             constantBuffer = device.CreateBuffer(64, MTLResourceOptions.CpuCacheModeDefault);
 
@@ -171,11 +171,11 @@ namespace DrawCube
         {
             // Update
             var time = clock.ElapsedMilliseconds / 1000.0f;
-            var viewProj = Matrix4.Mult(this.view, this.proj);
-            var worldViewProj = Matrix4.CreateRotationX(time) * Matrix4.CreateRotationY(time * 2) * Matrix4.CreateRotationZ(time * .7f) * viewProj;
-            worldViewProj = Matrix4.Transpose(worldViewProj);
+            var viewProj = Matrix4x4.Multiply(this.view, this.proj);
+            var worldViewProj = Matrix4x4.CreateRotationX(time) * Matrix4x4.CreateRotationY(time * 2) * Matrix4x4.CreateRotationZ(time * .7f) * viewProj;
+            worldViewProj = Matrix4x4.Transpose(worldViewProj);
 
-            int rawsize = Marshal.SizeOf<Matrix4>();
+            int rawsize = Marshal.SizeOf<Matrix4x4>();
             var rawdata = new byte[rawsize];
 
             GCHandle pinnedUniforms = GCHandle.Alloc(worldViewProj, GCHandleType.Pinned);
@@ -204,7 +204,7 @@ namespace DrawCube
 				renderEncoder.SetDepthStencilState(depthState);
                 renderEncoder.SetRenderPipelineState(pipelineState);
                 renderEncoder.SetVertexBuffer(vertexBuffer, 0, 0);
-                renderEncoder.SetVertexBuffer(constantBuffer, (nuint)Marshal.SizeOf<Matrix4>(), 1);
+                renderEncoder.SetVertexBuffer(constantBuffer, (nuint)Marshal.SizeOf<Matrix4x4>(), 1);
 
                 // Tell the render context we want to draw our primitives               
                 renderEncoder.DrawPrimitives(MTLPrimitiveType.Triangle, 0, (nuint)vertexData.Length / 2);
@@ -222,21 +222,21 @@ namespace DrawCube
 
         #region Helpers
 
-        public static Matrix4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
+        public static Matrix4x4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
         {
-            Matrix4 matrix;
+            Matrix4x4 matrix;
             CreateLookAt(ref position, ref target, ref upVector, out matrix);
 
             return matrix;
         }
 
-        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4 result)
+        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4x4 result)
         {
             Vector3 vector1 = Vector3.Normalize(position - target);
             Vector3 vector2 = Vector3.Normalize(Vector3.Cross(upVector, vector1));
             Vector3 vector3 = Vector3.Cross(vector1, vector2);
 
-            result = Matrix4.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = vector2.X;
             result.M12 = vector3.X;
             result.M13 = vector1.X;

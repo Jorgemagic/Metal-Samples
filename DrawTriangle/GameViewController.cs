@@ -4,7 +4,7 @@ using AppKit;
 using Foundation;
 using Metal;
 using MetalKit;
-using OpenTK;
+using System.Numerics;
 
 namespace DrawTriangle
 {
@@ -148,7 +148,7 @@ namespace DrawTriangle
 
                 // Schedule a present once the framebuffer is complete using the current drawable
                 commandBuffer.PresentDrawable(drawable);
-            }
+            }   
 
             // Finalize rendering here & push the command buffer to the GPU
             commandBuffer.Commit();

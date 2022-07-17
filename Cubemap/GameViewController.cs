@@ -5,7 +5,7 @@ using AppKit;
 using Foundation;
 using Metal;
 using MetalKit;
-using OpenTK;
+using System.Numerics;
 
 namespace DrawTriangle
 {
@@ -27,13 +27,13 @@ namespace DrawTriangle
     public struct Parameters
     {
         [FieldOffset(0)]
-        public Matrix4 WorldViewProjection;
+        public Matrix4x4 WorldViewProjection;
 
         [FieldOffset(64)]
-        public Matrix4 World;
+        public Matrix4x4 World;
 
         [FieldOffset(128)]
-        public Matrix4 WorldInverseTranspose;
+        public Matrix4x4 WorldInverseTranspose;
 
         [FieldOffset(192)]
         public Vector3 CameraPosition;
@@ -57,18 +57,18 @@ namespace DrawTriangle
             for (int i = 0; i <= tessellation; i++)
             {
                 float outerPercent = i / (float)tessellation;
-                float outerAngle = outerPercent * MathHelper.TwoPi;
+                float outerAngle = outerPercent * (float)Math.PI * 2;
 
                 // Create a transform matrix that will align geometry to
                 // slice perpendicularly though the current ring position.
-                Matrix4 transform = Matrix4.CreateTranslation(diameter / 2, 0, 0) *
-                                   Matrix4.CreateRotationY(outerAngle);
+                Matrix4x4 transform = Matrix4x4.CreateTranslation(diameter / 2, 0, 0) *
+                                   Matrix4x4.CreateRotationY(outerAngle);
 
                 // Now we loop along the other axis, around the side of the tube.
                 for (int j = 0; j <= tessellation; j++)
                 {
                     float innerPercent = j / (float)tessellation;
-                    float innerAngle = MathHelper.TwoPi * innerPercent;
+                    float innerAngle = (float)Math.PI * 2 * innerPercent;
 
                     float dx = (float)Math.Cos(innerAngle);
                     float dy = (float)Math.Sin(innerAngle);
@@ -122,7 +122,7 @@ namespace DrawTriangle
         IMTLSamplerState sampler;
 
         System.Diagnostics.Stopwatch clock;
-        Matrix4 proj, view;
+        Matrix4x4 proj, view;
         Parameters param;
         ushort[] indexDataArray;
 
@@ -197,17 +197,17 @@ namespace DrawTriangle
 
             Vector3 cameraPosition = new Vector3(0, 0, 1.5f);
             this.view = CreateLookAt(cameraPosition, new Vector3(0, 0, 0), Vector3.UnitY);
-            var aspect = (float)(View.Bounds.Size.Width / View.Bounds.Size.Height);
-            proj = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
+            var aspect = (float)(View.Bounds.Size.Width.Value / View.Bounds.Size.Height.Value);
+            proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
 
 
             // Constant Buffer
             this.param = new Parameters()
             {
                 CameraPosition = cameraPosition,
-                WorldViewProjection = Matrix4.Identity,
-                World = Matrix4.Identity,
-                WorldInverseTranspose = Matrix4.Identity,
+                WorldViewProjection = Matrix4x4.Identity,
+                World = Matrix4x4.Identity,
+                WorldInverseTranspose = Matrix4x4.Identity,
             };
 
             this.constantBuffer = device.CreateBuffer((uint)Marshal.SizeOf(this.param), MTLResourceOptions.CpuCacheModeDefault);
@@ -270,15 +270,15 @@ namespace DrawTriangle
         {
             // Update
             var time = clock.ElapsedMilliseconds / 1000.0f;
-            var viewProj = Matrix4.Mult(this.view, this.proj);
-            var world = Matrix4.CreateRotationX(time) * Matrix4.CreateRotationY(time * 2) * Matrix4.CreateRotationZ(time * .7f);
+            var viewProj = Matrix4x4.Multiply(this.view, this.proj);
+            var world = Matrix4x4.CreateRotationX(time) * Matrix4x4.CreateRotationY(time * 2) * Matrix4x4.CreateRotationZ(time * .7f);
 
             var worldViewProj = world * viewProj;
-            var worldInverse = Matrix4.Invert(world);
+            Matrix4x4.Invert(world, out var worldInverse);
 
-            param.World = Matrix4.Transpose(world);
+            param.World = Matrix4x4.Transpose(world);
             param.WorldInverseTranspose = worldInverse;
-            param.WorldViewProjection = Matrix4.Transpose(worldViewProj);
+            param.WorldViewProjection = Matrix4x4.Transpose(worldViewProj);
 
             SetConstantBuffer(this.param, constantBuffer);
 
@@ -335,21 +335,21 @@ namespace DrawTriangle
             Marshal.Copy(rawdata, 0, buffer.Contents + rawsize, rawsize);
         }
 
-        public static Matrix4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
+        public static Matrix4x4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
         {
-            Matrix4 matrix;
+            Matrix4x4 matrix;
             CreateLookAt(ref position, ref target, ref upVector, out matrix);
 
             return matrix;
         }
 
-        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4 result)
+        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4x4 result)
         {
             Vector3 vector1 = Vector3.Normalize(position - target);
             Vector3 vector2 = Vector3.Normalize(Vector3.Cross(upVector, vector1));
             Vector3 vector3 = Vector3.Cross(vector1, vector2);
 
-            result = Matrix4.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = vector2.X;
             result.M12 = vector3.X;
             result.M13 = vector1.X;

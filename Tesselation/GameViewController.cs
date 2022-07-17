@@ -4,7 +4,7 @@ using AppKit;
 using Foundation;
 using Metal;
 using MetalKit;
-using OpenTK;
+using System.Numerics;
 
 namespace DrawTriangle
 {

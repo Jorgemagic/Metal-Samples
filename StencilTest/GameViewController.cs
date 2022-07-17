@@ -4,7 +4,7 @@ using AppKit;
 using Foundation;
 using Metal;
 using MetalKit;
-using OpenTK;
+using System.Numerics;
 
 namespace MetalTest
 {
@@ -29,7 +29,7 @@ namespace MetalTest
         public bool IsTextured;
 
         [FieldOffset(16)]
-        public Matrix4 WorldViewProjection;
+        public Matrix4x4 WorldViewProjection;
     }
 
     public partial class GameViewController : NSViewController, IMTKViewDelegate
@@ -94,7 +94,7 @@ namespace MetalTest
         IMTLSamplerState sampler;
 
         System.Diagnostics.Stopwatch clock;
-        Matrix4 proj, view;
+        Matrix4x4 proj, view;
         Parameters param;
 
         public GameViewController(IntPtr handle)
@@ -161,8 +161,8 @@ namespace MetalTest
             clock.Start();
 
             this.view = CreateLookAt(new Vector3(0, 0, 5), new Vector3(0, 0, 0), Vector3.UnitY);
-            var aspect = (float)(View.Bounds.Size.Width / View.Bounds.Size.Height);
-            proj = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
+            var aspect = (float)(View.Bounds.Size.Width.Value / View.Bounds.Size.Height.Value);
+            proj = Matrix4x4.CreatePerspectiveFieldOfView((float)Math.PI / 4, aspect, 0.1f, 100);
 
             this.constantBuffer1 = device.CreateBuffer((uint)Marshal.SizeOf(this.param), MTLResourceOptions.CpuCacheModeDefault);
             this.constantBuffer2 = device.CreateBuffer((uint)Marshal.SizeOf(this.param), MTLResourceOptions.CpuCacheModeDefault);
@@ -253,10 +253,10 @@ namespace MetalTest
 
 				// First Draw
 				var time = clock.ElapsedMilliseconds / 1000.0f;
-				var viewProj = Matrix4.Mult(this.view, this.proj);
-				var worldViewProj = Matrix4.CreateRotationX(time) * Matrix4.CreateRotationY(time * 2) * Matrix4.CreateRotationZ(time * .7f) * viewProj;
+				var viewProj = Matrix4x4.Multiply(this.view, this.proj);
+				var worldViewProj = Matrix4x4.CreateRotationX(time) * Matrix4x4.CreateRotationY(time * 2) * Matrix4x4.CreateRotationZ(time * .7f) * viewProj;
 
-				param.WorldViewProjection = Matrix4.Transpose(worldViewProj);
+				param.WorldViewProjection = Matrix4x4.Transpose(worldViewProj);
 				param.IsTextured = true;
 				SetConstantBuffer(this.param, this.constantBuffer1);  
 
@@ -282,8 +282,8 @@ namespace MetalTest
 
                 // Set constant buffer
                 param.IsTextured = false;
-                worldViewProj = Matrix4.CreateRotationX(time) * Matrix4.CreateRotationY(time * 2) * Matrix4.CreateRotationZ(time * .7f) * Matrix4.Scale(1.04f) * viewProj;
-                param.WorldViewProjection = Matrix4.Transpose(worldViewProj);
+                worldViewProj = Matrix4x4.CreateRotationX(time) * Matrix4x4.CreateRotationY(time * 2) * Matrix4x4.CreateRotationZ(time * .7f) * Matrix4x4.CreateScale(1.04f) * viewProj;
+                param.WorldViewProjection = Matrix4x4.Transpose(worldViewProj);
                 SetConstantBuffer(this.param, constantBuffer2);                      
 
                 renderEncoder.SetStencilReferenceValue(1);
@@ -322,21 +322,21 @@ namespace MetalTest
             Marshal.Copy(rawdata, 0, buffer.Contents + rawsize, rawsize);
         }
 
-        public static Matrix4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
+        public static Matrix4x4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
         {
-            Matrix4 matrix;
+            Matrix4x4 matrix;
             CreateLookAt(ref position, ref target, ref upVector, out matrix);
 
             return matrix;
         }
 
-        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4 result)
+        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4x4 result)
         {
             Vector3 vector1 = Vector3.Normalize(position - target);
             Vector3 vector2 = Vector3.Normalize(Vector3.Cross(upVector, vector1));
             Vector3 vector3 = Vector3.Cross(vector1, vector2);
 
-            result = Matrix4.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = vector2.X;
             result.M12 = vector3.X;
             result.M13 = vector1.X;

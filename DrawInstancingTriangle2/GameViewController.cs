@@ -4,7 +4,7 @@ using AppKit;
 using Foundation;
 using Metal;
 using MetalKit;
-using OpenTK;
+using System.Numerics;
 
 namespace MetalTest
 {    
@@ -187,21 +187,21 @@ namespace MetalTest
                
         #region Helpers
 
-        public static Matrix4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
+        public static Matrix4x4 CreateLookAt(Vector3 position, Vector3 target, Vector3 upVector)
         {
-            Matrix4 matrix;
+            Matrix4x4 matrix;
             CreateLookAt(ref position, ref target, ref upVector, out matrix);
 
             return matrix;
         }
 
-        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4 result)
+        public static void CreateLookAt(ref Vector3 position, ref Vector3 target, ref Vector3 upVector, out Matrix4x4 result)
         {
             Vector3 vector1 = Vector3.Normalize(position - target);
             Vector3 vector2 = Vector3.Normalize(Vector3.Cross(upVector, vector1));
             Vector3 vector3 = Vector3.Cross(vector1, vector2);
 
-            result = Matrix4.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = vector2.X;
             result.M12 = vector3.X;
             result.M13 = vector1.X;
