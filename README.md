@@ -2,7 +2,7 @@
 
 A [Metal](https://developer.apple.com/metal/) Sample Gallery written in CSharp using [NET6](https://docs.microsoft.com/en-us/dotnet/core/install/macos)
 
-Notes. Visual Studio for Mac could be some problems. If you have issues running the samples try with _dotnet run_ command in the folder of each example.
+Notes. Visual Studio for Mac could have some problems. If you have issues running the samples try with _dotnet run_ command in the folder of each example.
 
 ## Examples
 
